@@ -3,12 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/red">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/red"
+    tools:context=".RegisterActivity">
+<!--    <include-->
+<!--        android:id="@+id/toolBar"-->
+<!--        layout = "@layout/bar_layout">-->
+<!--    </include>-->
     <TextView
         android:id="@+id/tvReateAcc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:text="CREATE ACCOUNT"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
@@ -21,7 +27,7 @@
         android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/giaodienedtwhite"
         android:drawableLeft="@drawable/email_icon"
         android:drawablePadding="10dp"
@@ -37,7 +43,7 @@
         android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/giaodienedtwhite"
         android:drawableLeft="@drawable/user_icon"
         android:drawablePadding="10dp"
@@ -49,11 +55,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etEmail" />
     <EditText
+        android:id="@+id/etMobile"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/giaodienedtwhite"
+        android:drawableLeft="@drawable/ic_contact_phone"
+        android:drawablePadding="10dp"
+        android:hint="Phone Number"
+        android:inputType="number"
+        android:padding="20dp"
+        android:textColorHint="@android:color/holo_red_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etUserCreate" />
+    <EditText
         android:id="@+id/etPassCreate"
         android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/giaodienedtwhite"
         android:drawableLeft="@drawable/key_icon"
         android:drawablePadding="10dp"
@@ -63,13 +85,13 @@
         android:textColorHint="@android:color/holo_red_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etUserCreate" />
+        app:layout_constraintTop_toBottomOf="@id/etMobile" />
     <EditText
         android:id="@+id/etPassConCreate"
         android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/giaodienedtwhite"
         android:drawableLeft="@drawable/key_icon"
         android:drawablePadding="10dp"
@@ -136,5 +158,4 @@
         android:text="Cancel"
         android:textColor="#FFFFFF"
         android:textSize="20dp"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

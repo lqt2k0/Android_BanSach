@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Furniture</string>
+    <string name="app_name">Win Book</string>
+    <string name="prefLoginState">loginstate</string>
 </resources>

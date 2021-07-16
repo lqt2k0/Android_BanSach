@@ -4,55 +4,135 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-    <com.google.android.material.appbar.AppBarLayout
+    tools:context="activity.MainActivity">
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/appbarlayout">
-        <androidx.appcompat.widget.Toolbar
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:id="@+id/toolBar">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.Toolbar
+                android:background="@color/red"
+                android:id="@+id/toolBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:titleTextColor="@color/white"
+                app:title="Trang Chủ">
+            </androidx.appcompat.widget.Toolbar>
+            <ViewFlipper
+                android:id="@+id/viewFlipper"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+            </ViewFlipper>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-<!--                <EditText-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:hint="Name, description"-->
-<!--                    android:padding="10dp"-->
-<!--                    android:layout_margin="15dp"-->
-<!--                    android:cursorVisible="false"-->
-<!--                    android:drawableLeft="@drawable/ic_search"-->
-<!--                    android:id="@+id/search_view"-->
-<!--                    android:background="@android:color/white"/>-->
-                <SearchView
-                    android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+<!--                android:background="@color/">-->
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_margin="15dp"
-                    android:cursorVisible="false"
-                    android:padding="10dp"
-                    android:id="@+id/search_view"
-                    android:queryHint="Name, description"
-                    android:background="@color/white"
-                    app:showAsAction="never"
-                    />
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:text="Sản phẩm mới nhất"
+                    android:layout_margin="5dp">
+                </TextView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycleViewTrangChu"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </androidx.recyclerview.widget.RecyclerView>
 
             </LinearLayout>
-        </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/appbarlayout"
-        android:layout_above="@id/menu_bottom">
-    </FrameLayout>
-
+        </LinearLayout>
+        <com.google.android.material.navigation.NavigationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity = "start"
+            android:id="@+id/naviTrangChu">
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lstViewTrangChu">
+            </ListView>
+        </com.google.android.material.navigation.NavigationView>
+    </androidx.drawerlayout.widget.DrawerLayout>
+<!--    <androidx.drawerlayout.widget.DrawerLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:id="@+id/appbarlayout">-->
+<!--            <androidx.appcompat.widget.Toolbar-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="?attr/actionBarSize"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:id="@+id/toolBar">-->
+<!--                <ViewFlipper-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="200dp"-->
+<!--                    android:id="@+id/viewFlipper">-->
+<!--                </ViewFlipper>-->
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:background="@color/black">-->
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Sản phẩm mới nhất"/>-->
+<!--                    <androidx.recyclerview.widget.RecyclerView-->
+<!--                        android:id="@+id/recycleView"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent">-->
+<!--                    </androidx.recyclerview.widget.RecyclerView>-->
+<!--                <SearchView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_alignParentTop="true"-->
+<!--                    android:layout_margin="15dp"-->
+<!--                    android:cursorVisible="false"-->
+<!--                    android:padding="10dp"-->
+<!--                    android:id="@+id/search_view"-->
+<!--                    android:queryHint="Name, description"-->
+<!--                    android:background="@color/white"-->
+<!--                    app:showAsAction="never" />-->
+<!--                </LinearLayout>-->
+<!--            </androidx.appcompat.widget.Toolbar>-->
+<!--        </LinearLayout>-->
+<!--        <FrameLayout-->
+<!--            android:id="@+id/frameLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_alignParentStart="true"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_below="@id/appbarlayout"-->
+<!--            android:layout_above="@id/menu_bottom">-->
+<!--        </FrameLayout>-->
+<!--    </androidx.drawerlayout.widget.DrawerLayout>-->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:orientation="vertical">-->
+<!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--            android:id="@+id/menu_bottom"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="60dp"-->
+<!--            android:layout_alignParentStart="true"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:background="#FF2323"-->
+<!--            app:menu="@menu/menu_bottom_nav_layout"-->
+<!--            app:itemIconTint="@color/white"-->
+<!--            app:itemTextColor="@color/white"/>-->
+<!--    </LinearLayout>-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menu_bottom"
         android:layout_width="match_parent"
@@ -60,10 +140,9 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:background="#FF2323"
+        android:background="@color/red"
         app:menu="@menu/menu_bottom_nav_layout"
         app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"/>
-
-
+        app:itemTextColor="@color/white">
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 </RelativeLayout>

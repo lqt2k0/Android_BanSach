@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="10"
+    android:background="@color/red"
+    android:gravity="center">
+    <LinearLayout
+        android:layout_weight="3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:id="@+id/imageViewTheLoaiSach"
+            android:src="@mipmap/ic_launcher"
+            android:layout_margin="5dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_margin="5dp"
+            android:id="@+id/tvTheLoaiSach"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thể Loại Sách"
+            android:layout_centerHorizontal="true"
+            android:textSize="25dp"
+            android:shadowColor="@color/black"
+            android:shadowDx="0.0"
+            android:shadowDy="0.0"
+            android:shadowRadius="15.0"
+            android:textColor="@color/white"
+            android:textStyle="bold">
+        </TextView>
+    </LinearLayout>
+</LinearLayout>
