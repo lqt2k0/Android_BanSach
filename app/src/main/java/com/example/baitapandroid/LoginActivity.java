@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import activity.MainActivity;
+import ulti.Server;
 
 public class LoginActivity extends AppCompatActivity {
     EditText edtEmail, edtPassword;
@@ -166,33 +167,57 @@ public class LoginActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setCancelable((false));
         progressDialog.setIndeterminate(false);
-        progressDialog.setTitle("Registering New Account");
+        progressDialog.setTitle("Wait a second!");
         progressDialog.show();
-        String uRl = "http://192.168.1.10:8080/server/login.php";
+        //String uRl = "http://192.168.1.14:8080/server/login.php";
+        String uRl = Server.DuongdanLogin;
         StringRequest request = new StringRequest(Request.Method.POST, uRl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if(response.equals("Login Success"))
-                {
-                    progressDialog.dismiss();
-                    Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    if(loginState.isChecked())
+//                try {
+//                    JSONObject jsonObject = new JSONObject(response);
+//                    String result = jsonObject.getString("data");
+
+                    if(response.equals("Login Success"))
                     {
-                        editor.putString(getResources().getString(R.string.prefLoginState),"loggedin");
+                        progressDialog.dismiss();
+                        Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        if(loginState.isChecked())
+                        {
+                            editor.putString(getResources().getString(R.string.prefLoginState),"loggedin");
+                        }
+                        else
+                        {
+                            editor.putString(getResources().getString(R.string.prefLoginState),"loggedout");
+                        }
+
+//                        for(int i = 0; i < jsonObject.length(); i++)
+//                        {
+//                            JSONObject object = jsonObject.getJSONObject(String.valueOf(i));
+//                            String name = object.getString("username");
+//                            String email = object.getString("email");
+//                            String phone = object.getString("mobile");
+//                            String gender = object.getString("gender");
+//                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                            intent.putExtra("username", name);
+//                            intent.putExtra("email", email);
+//                            intent.putExtra("mobile", phone);
+//                            intent.putExtra("gender", gender);
+//                            startActivity(intent);
+//                            finish();
+//                        }
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
                     }
                     else
                     {
-                        editor.putString(getResources().getString(R.string.prefLoginState),"loggedout");
+                        progressDialog.dismiss();
+                        Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
                     }
-
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                }
-                else
-                {
-                    progressDialog.dismiss();
-                    Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
-                }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
             }
         }, new Response.ErrorListener() {
             @Override

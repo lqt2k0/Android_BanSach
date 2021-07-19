@@ -1,28 +1,24 @@
 package activity;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ViewFlipper;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.ViewFlipper;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,7 +26,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.baitapandroid.R;
-import com.example.baitapandroid.RegisterActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
@@ -41,12 +36,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import adapter.SachAdapter;
 import adapter.theLoaiSachAdapter;
+import model.GioHang;
+import model.Sach;
 import model.theLoaiSach;
 import ulti.CheckConnection;
 import ulti.Server;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     Toolbar toolbar;
     ViewFlipper viewFlipperTrangChu;
@@ -66,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
 //    ArrayList<Furniture> data = new ArrayList<>();
     BottomNavigationView bottomNavigationView;
 
+    ArrayList<Sach> mangSach;
+    SachAdapter SachAdapter;
+
+    public static ArrayList<GioHang> mangGioHang;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,12 +78,60 @@ public class MainActivity extends AppCompatActivity {
             ActionBar();
             ActionViewFlipper();
             getDuLieuTheLoai();
+            getDuLieuSachNew();
+            CatchOnItemListView();
         }
         else
         {
-            CheckConnection.ShowToast_Short(getApplicationContext(), "Bạn hãy kiểm tra lại kết nối");
+            CheckConnection.ShowToast_Short(getApplicationContext(), "Check your connection!");
             finish();
         }
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                switch (id) {
+                    case R.id.menu_home:
+                        getSupportActionBar().setTitle("Home");
+                        if(CheckConnection.haveNetworkConnection(getApplicationContext()))
+                        {
+                            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            CheckConnection.ShowToast_Short(getApplicationContext(), "Check your connection" );
+                        }
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    case R.id.menu_dashboard:
+                        getSupportActionBar().setTitle("Dashboard");
+
+                        break;
+                    case R.id.menu_notifications:
+                        getSupportActionBar().setTitle("Notification");
+
+                        break;
+                    case R.id.menu_supervisor_account:
+                        getSupportActionBar().setTitle("Profile");
+                        if(CheckConnection.haveNetworkConnection(getApplicationContext()))
+                        {
+                            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            CheckConnection.ShowToast_Short(getApplicationContext(), "Check your connection" );
+                        }
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+
 //        //Anh xa
 //        getData(data);
 //        current_layout = new HomeFragment(data);
@@ -108,7 +158,161 @@ public class MainActivity extends AppCompatActivity {
 //                ArrayList<Furniture> temp = FilterNow(data, newText);
 //                loadFragment(new SearchFragment(temp));
 //                return true;
+//            }
+
+//    private void setUpBookAdapter()
+//    {
+//        SachAdapter = new SachAdapter(mangSach, this);
+//        recyclerViewTrangChu.setAdapter(SachAdapter);
+//    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_top_nav_layout, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.menu_giohang:
+            Intent intent = new Intent(getApplicationContext(), CartActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void CatchOnItemListView() {
+        listViewTrangChu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position)
+                {
+                    case 0:
+                        if(CheckConnection.haveNetworkConnection(getApplicationContext()))
+                        {
+                            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            CheckConnection.ShowToast_Short(getApplicationContext(), "Check your connection" );
+                        }
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    case 1:
+                        if(CheckConnection.haveNetworkConnection(getApplicationContext()))
+                        {
+                            Intent intent = new Intent(MainActivity.this, NovelActivity.class);
+                            intent.putExtra("MaTheLoai", mangSach.get(position).getMaSach());
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            CheckConnection.ShowToast_Short(getApplicationContext(), "Check your connection" );
+                        }
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    case 2:
+                        if(CheckConnection.haveNetworkConnection(getApplicationContext()))
+                        {
+                            Intent intent = new Intent(MainActivity.this, StoryActivity.class);
+                            intent.putExtra("MaTheLoai", mangSach.get(position).getMaSach());
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            CheckConnection.ShowToast_Short(getApplicationContext(), "Check your connection" );
+                        }
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    case 3:
+                        if(CheckConnection.haveNetworkConnection(getApplicationContext()))
+                        {
+                            Intent intent = new Intent(MainActivity.this, LifeSkillsActivity.class);
+                            intent.putExtra("MaTheLoai", mangSach.get(position).getMaSach());
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            CheckConnection.ShowToast_Short(getApplicationContext(), "Check your connection" );
+                        }
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    case 4:
+                        if(CheckConnection.haveNetworkConnection(getApplicationContext()))
+                        {
+                            Intent intent = new Intent(MainActivity.this, ContactActivity.class);
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            CheckConnection.ShowToast_Short(getApplicationContext(), "Check your connection" );
+                        }
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    case 5:
+                        if(CheckConnection.haveNetworkConnection(getApplicationContext()))
+                        {
+                            Intent intent = new Intent(MainActivity.this, InformationActivity.class);
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            CheckConnection.ShowToast_Short(getApplicationContext(), "Check your connection" );
+                        }
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                }
             }
+        });
+    }
+
+    private void getDuLieuSachNew() {
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.DuongdanSachNew, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if(response != null)
+                {
+                    int Masach = 0;
+                    String Tensach = "";
+                    String Hinhanh = "";
+                    String Motasach = "";
+                    int Matheloai = 0;
+                    int Matacgia = 0;
+                    Integer Giasach = 0;
+
+                    for (int i = 0; i < response.length(); i++)
+                    {
+                        try {
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            Masach = jsonObject.getInt("MaSach");
+                            Tensach = jsonObject.getString("TenSach");
+                            Hinhanh = jsonObject.getString("HinhAnh");
+                            Motasach = jsonObject.getString("MoTa");
+                            Matheloai = jsonObject.getInt("MaTheLoai");
+                            Matacgia = jsonObject.getInt("MaTacGia");
+                            Giasach = jsonObject.getInt("GiaBan");
+                            mangSach.add(new Sach(Masach, Tensach, Hinhanh, Motasach, Matheloai, Matacgia, Giasach));
+                            SachAdapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                CheckConnection.ShowToast_Short(getApplicationContext(), error.toString());
+            }
+        });
+        requestQueue.add(jsonArrayRequest);
+    }
 
     private void getDuLieuTheLoai() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -130,8 +334,8 @@ public class MainActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-                    mangtheloaisach.add(3, new theLoaiSach(0, "Liên Hệ", "https://img.icons8.com/clouds/2x/phone.png"));
-                    mangtheloaisach.add(4, new theLoaiSach(0, "Thông Tin", "https://img.icons8.com/clouds/2x/documents.png"));
+                    mangtheloaisach.add(4, new theLoaiSach(0, "Contact", "https://img.icons8.com/clouds/2x/phone.png"));
+                    mangtheloaisach.add(5, new theLoaiSach(0, "Information", "https://img.icons8.com/clouds/2x/documents.png"));
                 }
             }
         }, new Response.ErrorListener() {
@@ -146,10 +350,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void ActionViewFlipper() {
         ArrayList<String> mangquangcao = new ArrayList<>();
-        mangquangcao.add("https://cdn0.fahasa.com/media/magentothem/banner7/BTS-T6.920x420.3.png");
+        mangquangcao.add("https://cdn0.fahasa.com/media/magentothem/banner7/muonkiepnhansinh_resize_920x420.jpg");
         mangquangcao.add("https://cdn0.fahasa.com/media/magentothem/banner7/monthlysale_resize_920.png");
         mangquangcao.add("https://cdn0.fahasa.com/media/magentothem/banner7/TrangManga920x420.png");
         mangquangcao.add("https://cdn0.fahasa.com/media/magentothem/banner7/920x420_phienchodocu.png");
+        mangquangcao.add("https://cdn0.fahasa.com/media/magentothem/banner7/Mua-sam-an-toan-920x420.png");
 
         for (int i = 0; i < mangquangcao.size(); i++)
         {
@@ -191,11 +396,44 @@ public class MainActivity extends AppCompatActivity {
         mangtheloaisach.add(0, new theLoaiSach(0, "Trang Chủ", "https://img.icons8.com/bubbles/2x/home.png"));
         theloaisachAdapter = new theLoaiSachAdapter(mangtheloaisach, getApplicationContext());
         listViewTrangChu.setAdapter(theloaisachAdapter);
+        mangSach = new ArrayList<>();
+        SachAdapter = new SachAdapter(getApplicationContext(), mangSach);
+        recyclerViewTrangChu.setHasFixedSize(true);
+        recyclerViewTrangChu.setLayoutManager(new GridLayoutManager(getApplicationContext(),1));
+        recyclerViewTrangChu.setAdapter(SachAdapter);
+        if(mangGioHang != null)
+        {
+
+        }
+        else
+        {
+            mangGioHang = new ArrayList<>();
+        }
     }
 
 
+//    @Override
+//    public void onBookItemClick(int position, ImageView imgBook, TextView title, TextView price) {
+//        Intent intent = new Intent(this, BookDetailsActivity.class);
+//        intent.putExtra("bookOject", mangSach.get(position));
+//        Pair<View, String> p1 = Pair.create((View) imgBook, "bookWin");
+//        Pair<View, String> p2 = Pair.create((View) title, "titleWin");
+//        Pair<View, String> p3 = Pair.create((View) price, "priceWin");
+//
+//        ActivityOptionsCompat optionsCompat =
+//                ActivityOptionsCompat.makeSceneTransitionAnimation(this,p1,p2,p3);
+//
+//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+//        {
+//            startActivity(intent, optionsCompat.toBundle());
+//        }
+//        else
+//            startActivity(intent);
+//    }
+//
+//
 //        });
-
+//
 //        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
 //            @Override
 //            public boolean onClose() {

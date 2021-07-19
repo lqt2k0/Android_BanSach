@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="activity.BookDetailsActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarDetailSach"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Book Details "
+        app:titleTextColor="@color/white"></androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/container"
+        android:layout_width="0dp"
+        android:layout_height="135dp"
+        android:background="@drawable/container_bg"
+        android:scaleType="centerCrop"
+        android:transitionName="contrainerWin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarDetailSach" />
+
+    <ImageView
+        android:id="@+id/imgSachDetail"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="72dp"
+        android:scaleType="centerCrop"
+        android:transitionName="bookWin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/pic1"></ImageView>
+
+    <TextView
+        android:transitionName="titleWin"
+        android:id="@+id/tvTenSachDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:maxLength="30"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imgSachDetail"
+        app:layout_constraintTop_toTopOf="@+id/imgSachDetail" />
+
+    <TextView
+        android:transitionName="authorWin"
+        android:id="@+id/tvTenTacGiaDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Nhã Nam Bookstore"
+        app:layout_constraintStart_toEndOf="@+id/imgSachDetail"
+        app:layout_constraintTop_toBottomOf="@+id/tvTenSachDetail" />
+
+    <RatingBar
+        android:id="@+id/ratingBarDetail"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:transitionName="rateWin"
+        app:layout_constraintStart_toEndOf="@+id/imgSachDetail"
+        app:layout_constraintTop_toBottomOf="@+id/tvGiaBanDetail" />
+
+    <TextView
+        android:id="@+id/tvScoreDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Score: 4.5"
+        android:transitionName="scoreWin"
+        app:layout_constraintBottom_toTopOf="@+id/ratingBarDetail"
+        app:layout_constraintStart_toStartOf="@+id/ratingBarDetail" />
+
+    <TextView
+        android:id="@+id/tvGiaBanDetail"
+        android:transitionName="priceWin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/imgSachDetail"
+        app:layout_constraintTop_toBottomOf="@+id/tvTenTacGiaDetail" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/container"
+        app:layout_constraintTop_toTopOf="@+id/container"
+        app:srcCompat="@drawable/ic_favorite" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgSachDetail">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:textColor="@color/black"
+                android:transitionName="detailsWin"
+                android:lineSpacingExtra="8sp"
+                android:id="@+id/tvMoTaDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:text="TextView"
+                android:paddingBottom="30dp" />
+        </ScrollView>
+    </LinearLayout>
+
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="330dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/giaodien2"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/container"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/imageView6"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarDetailSach" />
+
+    <Button
+        android:id="@+id/btnAddToCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="Add to cart"
+        app:layout_constraintEnd_toEndOf="@+id/container"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

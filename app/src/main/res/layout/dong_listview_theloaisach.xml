@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:weightSum="10"
     android:background="@color/red"
+    android:weightSum="10"
     android:gravity="center">
     <LinearLayout
         android:layout_weight="3"

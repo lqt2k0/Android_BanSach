@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/container"
+        android:layout_width="0dp"
+        android:layout_height="135dp"
+        android:background="@drawable/container_bg"
+        android:scaleType="centerCrop"
+        android:transitionName="contrainerWin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgSachGioHang"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        android:transitionName="bookWin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/pic1"></ImageView>
+
+    <TextView
+        android:id="@+id/tvTenGioHang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:maxLength="30"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:transitionName="titleWin"
+        app:layout_constraintStart_toEndOf="@+id/imgSachGioHang"
+        app:layout_constraintTop_toTopOf="@+id/imgSachGioHang" />
+
+    <TextView
+        android:id="@+id/tvGiaGioHang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:transitionName="priceWin"
+        app:layout_constraintStart_toEndOf="@+id/imgSachGioHang"
+        app:layout_constraintTop_toBottomOf="@+id/tvTenGioHang" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/container"
+        app:layout_constraintTop_toTopOf="@+id/container"
+        app:srcCompat="@drawable/ic_favorite" />
+
+    <Button
+        android:id="@+id/btnMinus"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="32dp"
+        android:focusable="false"
+        android:text="-"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imgSachGioHang"
+        app:layout_constraintTop_toBottomOf="@+id/tvGiaGioHang" />
+
+    <Button
+        android:id="@+id/btnPlus"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="60dp"
+        android:focusable="false"
+        android:text="+"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/container"
+        app:layout_constraintStart_toEndOf="@+id/btnValues"
+        app:layout_constraintTop_toBottomOf="@+id/tvGiaGioHang" />
+
+    <Button
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:id="@+id/btnValues"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/giaodien2"
+        android:backgroundTint="@null"
+        android:backgroundTintMode="@null"
+        android:text="1"
+        app:layout_constraintStart_toEndOf="@+id/btnMinus"
+        app:layout_constraintTop_toBottomOf="@+id/tvGiaGioHang" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

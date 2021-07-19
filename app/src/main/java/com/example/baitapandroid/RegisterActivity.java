@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import activity.MainActivity;
+import ulti.Server;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText edtEmail, edtUsername, edtPassword, edtConfirm, edtMobile;
@@ -131,7 +132,8 @@ public class RegisterActivity extends AppCompatActivity {
         progressDialog.setIndeterminate(false);
         progressDialog.setTitle("Registering New Account");
         progressDialog.show();
-        String uRl = "http://192.168.1.10:8080/server/register.php";
+        //String uRl = "http://192.168.1.14:8080/server/register.php";
+        String uRl = Server.DuongdanRegis;
         StringRequest request = new StringRequest(Request.Method.POST, uRl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
