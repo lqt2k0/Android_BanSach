@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="11"
+    android:descendantFocusability="blocksDescendants"
     tools:context="activity.CartActivity">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarCart"
@@ -13,13 +14,16 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/red"
         app:title="Cart "
-        app:titleTextColor="@color/white"></androidx.appcompat.widget.Toolbar>
+        android:descendantFocusability="blocksDescendants"
+        app:titleTextColor="@color/white">
+    </androidx.appcompat.widget.Toolbar>
     <LinearLayout
         android:layout_weight="8"
+        android:descendantFocusability="blocksDescendants"
         android:layout_width="match_parent"
         android:layout_height="0dp">
         <FrameLayout
-            android:id="@+id/frameLayout"
+            android:descendantFocusability="blocksDescendants"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
@@ -30,16 +34,21 @@
                 android:background="@drawable/emptycart"
                 android:gravity="center|top"
                 android:text="Empty Cart"
+                android:descendantFocusability="blocksDescendants"
                 android:textColor="@color/black"
-                android:textSize="30sp"></TextView>
+                android:textSize="30sp"/>
             <ListView
                 android:id="@+id/lvGioHang"
+                android:longClickable="true"
+                android:clickable="true"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></ListView>
+                android:layout_height="match_parent"
+                ></ListView>
         </FrameLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_weight="1.5"
+        android:orientation="horizontal"
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp">

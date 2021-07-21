@@ -1,6 +1,7 @@
 package activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,10 +18,11 @@ import com.example.baitapandroid.R;
 import java.text.DecimalFormat;
 
 import adapter.CartAdapter;
+import ulti.CheckConnection;
 
 public class CartActivity extends AppCompatActivity {
 
-    ListView lvGioHang;
+    ListView lvGioHang_Cart;
     TextView txtThongBao;
     static TextView txtTongTien;
     Button btnThanhToan, btnTiepTuc;
@@ -36,13 +38,38 @@ public class CartActivity extends AppCompatActivity {
         CheckData();
         EventUltil();
         CatchOnItemListView();
+        EventButton();
+    }
+
+    private void EventButton() {
+        btnTiepTuc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnThanhToan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(MainActivity.mangGioHang.size() > 0)
+                {
+                    Intent intent = new Intent(CartActivity.this, ConfirmActivity.class);
+                    startActivity(intent);
+                }
+                else
+                {
+                    CheckConnection.ShowToast_Short(CartActivity.this, "Empty cart!");
+                }
+            }
+        });
     }
 
     private void CatchOnItemListView() {
-        lvGioHang.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        lvGioHang_Cart.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this);
+            public boolean onItemLongClick(AdapterView<?> parent, View view,final int position, long id) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this, R.style.MyAlertDialogStyle);
                 builder.setTitle("Delete book");
                 builder.setMessage("Do you want to delete this book?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -69,14 +96,16 @@ public class CartActivity extends AppCompatActivity {
                             }
                         }
                     }
+
                 });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        cartAdapter.notifyDataSetChanged();
-                        EventUltil();
-                    }
-                });
+
+//                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        cartAdapter.notifyDataSetChanged();
+//                        EventUltil();
+//                    }
+//                });
                 builder.show();
                 return true;
             }
@@ -98,26 +127,27 @@ public class CartActivity extends AppCompatActivity {
         {
             cartAdapter.notifyDataSetChanged();
             txtThongBao.setVisibility(View.VISIBLE);
-            lvGioHang.setVisibility(View.INVISIBLE);
+            lvGioHang_Cart.setVisibility(View.INVISIBLE);
         }
         else
         {
             cartAdapter.notifyDataSetChanged();
             txtThongBao.setVisibility(View.INVISIBLE);
-            lvGioHang.setVisibility(View.VISIBLE);
+            lvGioHang_Cart.setVisibility(View.VISIBLE);
         }
     }
 
 
     private void AnhXa() {
-        lvGioHang = (ListView) findViewById(R.id.lvGioHang);
+        lvGioHang_Cart = (ListView) findViewById(R.id.lvGioHang);
         txtThongBao = (TextView) findViewById(R.id.tvThongBao);
         txtTongTien = (TextView) findViewById(R.id.tvGiaTri);
         btnThanhToan = (Button) findViewById(R.id.btnPayment);
         btnTiepTuc = (Button) findViewById(R.id.btnContinue);
         toolbarGioHang = (Toolbar) findViewById(R.id.toolbarCart);
-        cartAdapter = new CartAdapter(getApplicationContext(), MainActivity.mangGioHang);
-        lvGioHang.setAdapter(cartAdapter);
+        cartAdapter = new CartAdapter(CartActivity.this, MainActivity.mangGioHang);
+        lvGioHang_Cart.setAdapter(cartAdapter);
+
     }
 
     private void ActionToolbar() {

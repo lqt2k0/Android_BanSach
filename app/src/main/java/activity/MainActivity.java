@@ -2,12 +2,15 @@ package activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ViewFlipper;
@@ -17,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +30,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.baitapandroid.R;
+import com.example.baitapandroid.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
@@ -46,6 +51,8 @@ import ulti.Server;
 public class MainActivity extends AppCompatActivity{
 
     Toolbar toolbar;
+    //SearchView searchView;
+    EditText searchView;
     ViewFlipper viewFlipperTrangChu;
     RecyclerView recyclerViewTrangChu;
     NavigationView navigationView;
@@ -80,6 +87,7 @@ public class MainActivity extends AppCompatActivity{
             getDuLieuTheLoai();
             getDuLieuSachNew();
             CatchOnItemListView();
+            setUpSearchView();
         }
         else
         {
@@ -128,6 +136,29 @@ public class MainActivity extends AppCompatActivity{
                         break;
                 }
                 return true;
+            }
+        });
+    }
+
+    private void setUpSearchView() {
+        searchView = findViewById(R.id.search_view);
+        recyclerViewTrangChu.setFilterTouchesWhenObscured(true);
+        searchView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int
+                    count) {
+                System.out.println("Text [" + s + "] - Start [" + start + "] - Before [" + before + "] - Count [" + count + "]");
+                if (count < before) {
+                    SachAdapter.resetData();
+                }
+                SachAdapter.getFilterx().filter(s.toString());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
     }
@@ -184,6 +215,43 @@ public class MainActivity extends AppCompatActivity{
         }
         return super.onOptionsItemSelected(item);
     }
+
+    ArrayList<Sach> FilterNow(ArrayList<Sach> data, String key){
+        if(key.isEmpty())
+            return data;
+        ArrayList<Sach> temp = new ArrayList<>();
+        for(Sach sach: data){
+            if(sach.getTenSach().toLowerCase().trim().contains(key.toLowerCase().trim()))
+                temp.add(sach);
+        }
+        return temp;
+    }
+
+    public void loadFragment(SearchFragment sach)
+    {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.lstViewTrangChu, sach);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+//    private void searchItem()
+//    {
+//
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                ArrayList<Sach> temp = FilterNow(mangSach, newText);
+//                loadFragment(new SearchFragment(temp));
+//                return true;
+//            }
+//        });
+//    }
 
     private void CatchOnItemListView() {
         listViewTrangChu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -365,8 +433,8 @@ public class MainActivity extends AppCompatActivity{
         }
         viewFlipperTrangChu.setFlipInterval(5000);
         viewFlipperTrangChu.setAutoStart(true);
-        Animation animation_slide_in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in_right);
-        Animation animation_slide_out = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_out_right);
+        Animation animation_slide_in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_out_right);
+        Animation animation_slide_out = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in_right);
         viewFlipperTrangChu.setInAnimation(animation_slide_in);
         viewFlipperTrangChu.setInAnimation(animation_slide_out);
     }
@@ -401,6 +469,15 @@ public class MainActivity extends AppCompatActivity{
         recyclerViewTrangChu.setHasFixedSize(true);
         recyclerViewTrangChu.setLayoutManager(new GridLayoutManager(getApplicationContext(),1));
         recyclerViewTrangChu.setAdapter(SachAdapter);
+        //searchView = findViewById(R.id.search_view);
+
+//        if(!SharedPrefManager.getInstance(this).isLoggedIn())
+//        {
+//            finish();
+//            startActivity(new Intent(this, ProfileActivity.class));
+//            return;
+//        }
+
         if(mangGioHang != null)
         {
 

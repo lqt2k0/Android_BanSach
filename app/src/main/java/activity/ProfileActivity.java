@@ -1,6 +1,8 @@
 package activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +11,7 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.baitapandroid.LoginActivity;
 import com.example.baitapandroid.R;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
@@ -20,7 +23,7 @@ import ulti.CheckConnection;
 
 public class ProfileActivity extends AppCompatActivity {
     EditText userName, userEmail, userPhone, userAddress, userGender;
-    Button editProfile, changePass;
+    Button editProfile, changePass, btnlogout;
     Toolbar toolbarUserProfile;
     CircularImageView imgUserProfile;
     String emailKH = "";
@@ -127,6 +130,33 @@ public class ProfileActivity extends AppCompatActivity {
         editProfile = (Button) findViewById(R.id.btnEditUserProfile);
         changePass = (Button) findViewById(R.id.btnChangePass);
 
+        btnlogout = (Button) findViewById(R.id.btnLogout);
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(getResources().getString(R.string.prefLoginState),"loggedout");
+                editor.apply();
+                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                finish();
+
+            }
+        });
+
+//        if(!SharedPrefManager.getInstance(this).isLoggedIn())
+//        {
+//            finish();
+//            startActivity(new Intent(this, LoginActivity.class));
+//        }
+
+//        userName.setText(SharedPrefManager.getInstance(this).getUsername());
+//        userEmail.setText(SharedPrefManager.getInstance(this).getUseremail());
+//        //userAddress.setText(mDiaChi);
+//        userAddress.setText(SharedPrefManager.getInstance(this).getUseraddress());
+//        userGender.setText(SharedPrefManager.getInstance(this).getUsergender());
+
+
         Intent i = getIntent();
         String mName = i.getStringExtra("username");
         String mEmail = i.getStringExtra("email");
@@ -134,11 +164,11 @@ public class ProfileActivity extends AppCompatActivity {
         String mPhone = i.getStringExtra("mobile");
         String mGender = i.getStringExtra("gender");
 
-        userName.setText(mName);
-        userEmail.setText(mEmail);
-        //userAddress.setText(mDiaChi);
-        userPhone.setText(mPhone);
-        userGender.setText(mGender);
+//        userName.setText(mName);
+//        userEmail.setText(mEmail);
+//        //userAddress.setText(mDiaChi);
+//        userPhone.setText(mPhone);
+//        userGender.setText(mGender);
 
     }
 }

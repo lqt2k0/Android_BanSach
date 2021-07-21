@@ -42,6 +42,12 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_layout);
 
 
+//        if(!SharedPrefManager.getInstance(this).isLoggedIn())
+//        {
+//            finish();
+//            startActivity(new Intent(this, ProfileActivity.class));
+//        }
+
         sharedPreferences = getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
         edtEmail = findViewById(R.id.etEmailLogin);
         edtPassword = findViewById(R.id.etPassLogin);
@@ -98,8 +104,8 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String txtEmail = edtEmail.getText().toString();
-                String txtPassword = edtPassword.getText().toString();
+                String txtEmail = edtEmail.getText().toString().trim();
+                String txtPassword = edtPassword.getText().toString().trim();
 //                if(TextUtils.isEmpty(txtEmail) || TextUtils.isEmpty(txtPassword))
 //                {
 //                    Toast.makeText(LoginActivity.this, "All fiels required", Toast.LENGTH_SHORT).show();
@@ -162,6 +168,104 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+//    private void login(String email, String password)
+//    {
+//        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+//        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+//        progressDialog.setCancelable((false));
+//        progressDialog.setIndeterminate(false);
+//        progressDialog.setTitle("Wait a second!");
+//        progressDialog.show();
+//        //String uRl = "http://192.168.1.14:8080/server/login.php";
+//        String uRl = Server.DuongdanLogin;
+//        StringRequest request = new StringRequest(Request.Method.POST, uRl, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                if(response != null)
+//                {
+//                    try {
+//                        JSONObject jsonObject = new JSONObject(response.toString());
+//                        String result = jsonObject.getString("status");
+//                        JSONArray jsonArray = jsonObject.getJSONArray("data");
+//                        //if(response.equals("Login Success"))
+//                        if(result.equals("success"))
+//                        {
+//                            progressDialog.dismiss();
+//                            Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
+//                            SharedPreferences.Editor editor = sharedPreferences.edit();
+//                            if(loginState.isChecked())
+//                            {
+//                                editor.putString(getResources().getString(R.string.prefLoginState),"loggedin");
+//                            }
+//                            else{
+//                                editor.putString(getResources().getString(R.string.prefLoginState),"loggedout");
+//                            }
+//
+//                            for(int i = 0; i < jsonArray.length(); i++)
+//                            {
+//                                JSONObject object = jsonArray.getJSONObject(i);
+//                                String name = object.getString("username");
+//                                String email = object.getString("email");
+//                                String phone = object.getString("mobile");
+//                                String gender = object.getString("gender");
+//                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                                intent.putExtra("username", name);
+//                                intent.putExtra("email", email);
+//                                intent.putExtra("mobile", phone);
+//                                intent.putExtra("gender", gender);
+//                                startActivity(intent);
+//                                finish();
+//                            }
+//                            editor.apply();
+//                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                        }
+//                        else
+//                        {
+//                            progressDialog.dismiss();
+//                            Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
+//                        }
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                progressDialog.dismiss();
+//                Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+//
+//            }
+//        })
+//        {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                //return super.getParams();
+//                HashMap<String, String> param = new HashMap<>();
+//                param.put("email", email);
+//                param.put("psw", password);
+//                return  param;
+//            }
+//        };
+//        request.setRetryPolicy(new DefaultRetryPolicy(3000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+//        MySingleton.getInstance(LoginActivity.this).addToRequestQueue(request);
+//
+//
+////    @Override
+////    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+////        super.onActivityResult(requestCode, resultCode, data);
+////        if(requestCode == 100 && resultCode == 101){
+////            edtUsername.setText(data.getStringExtra("username"));
+////            edtPassword.setText(data.getStringExtra("password"));
+////        }
+////        if(requestCode == 102 && resultCode == 101){
+////            edtUsername.setText(data.getStringExtra("username"));
+////            edtPassword.setText(data.getStringExtra("password"));
+////        }
+//        requestQueue.add(request);
+//    }
+
     private void login(String email, String password)
     {
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
@@ -176,25 +280,24 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(String response) {
 //                try {
 //                    JSONObject jsonObject = new JSONObject(response);
-//                    String result = jsonObject.getString("data");
-
-                    if(response.equals("Login Success"))
+//                    String result = jsonObject.getString("status");
+//                JSONArray jsonArray = jsonObject.getJSONArray("data");
+                if(response.equals("Login Success"))
+                {
+                    progressDialog.dismiss();
+                    Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    if(loginState.isChecked())
                     {
-                        progressDialog.dismiss();
-                        Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        if(loginState.isChecked())
-                        {
-                            editor.putString(getResources().getString(R.string.prefLoginState),"loggedin");
-                        }
-                        else
-                        {
-                            editor.putString(getResources().getString(R.string.prefLoginState),"loggedout");
-                        }
+                        editor.putString(getResources().getString(R.string.prefLoginState),"loggedin");
+                    }
+                    else{
+                        editor.putString(getResources().getString(R.string.prefLoginState),"loggedout");
+                    }
 
-//                        for(int i = 0; i < jsonObject.length(); i++)
+//                        for(int i = 0; i < jsonArray.length(); i++)
 //                        {
-//                            JSONObject object = jsonObject.getJSONObject(String.valueOf(i));
+//                            JSONObject object = jsonArray.getJSONObject(i);
 //                            String name = object.getString("username");
 //                            String email = object.getString("email");
 //                            String phone = object.getString("mobile");
@@ -207,14 +310,14 @@ public class LoginActivity extends AppCompatActivity {
 //                            startActivity(intent);
 //                            finish();
 //                        }
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
-                    }
-                    else
-                    {
-                        progressDialog.dismiss();
-                        Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
-                    }
+                    editor.apply();
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                }
+                else
+                {
+                    progressDialog.dismiss();
+                    Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
+                }
 //                } catch (JSONException e) {
 //                    e.printStackTrace();
 //                }

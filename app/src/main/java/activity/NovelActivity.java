@@ -38,6 +38,7 @@ import java.util.Map;
 import adapter.NovelAdapter;
 import model.Sach;
 import ulti.CheckConnection;
+import ulti.Server;
 
 public class NovelActivity extends AppCompatActivity {
 
@@ -50,14 +51,15 @@ public class NovelActivity extends AppCompatActivity {
     View footerView;
     boolean isLoading = false;
     boolean limitData = false;
-    mHandler mHandler;
+    NovelActivity.mHandler mHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novel);
-        AnhXa();
-        if(CheckConnection.haveNetworkConnection(getApplicationContext()))
+
+        if(CheckConnection.haveNetworkConnection(NovelActivity.this))
         {
+            AnhXa();
             GetIdTheLoaiSach();
             ActionToolbar();
             GetData(page);
@@ -66,7 +68,7 @@ public class NovelActivity extends AppCompatActivity {
         }
         else
         {
-            CheckConnection.ShowToast_Short(getApplicationContext(), "Check your connection!");
+            CheckConnection.ShowToast_Short(NovelActivity.this, "Check your connection!");
             finish();
         }
 
@@ -84,7 +86,7 @@ public class NovelActivity extends AppCompatActivity {
         switch (item.getItemId())
         {
             case R.id.menu_giohang:
-                Intent intent = new Intent(getApplicationContext(), CartActivity.class);
+                Intent intent = new Intent(NovelActivity.this, CartActivity.class);
                 startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
@@ -95,7 +97,7 @@ public class NovelActivity extends AppCompatActivity {
         lvNovel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), BookDetailsActivity.class);
+                Intent intent = new Intent(NovelActivity.this, BookDetailsActivity.class);
                 intent.putExtra("thongtinsach", mangSachNovel.get(position));
                 startActivity(intent);
             }
@@ -106,7 +108,7 @@ public class NovelActivity extends AppCompatActivity {
         lvNovel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), BookDetailsActivity.class);
+                Intent intent = new Intent(NovelActivity.this, BookDetailsActivity.class);
                 intent.putExtra("thongtinsach", mangSachNovel.get(position));
                 startActivity(intent);
             }
@@ -119,10 +121,10 @@ public class NovelActivity extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if((firstVisibleItem + visibleItemCount) == totalItemCount && totalItemCount != 0 && isLoading == false && limitData == false )
+                if(firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount != 0 && isLoading == false && limitData == false )
                 {
                     isLoading = true;
-                    ThreadData threadData = new ThreadData();
+                    NovelActivity.ThreadData threadData = new NovelActivity.ThreadData();
                     threadData.start();
                 }
             }
@@ -130,9 +132,9 @@ public class NovelActivity extends AppCompatActivity {
     }
 
     private void GetData(int Page) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        //String duongdan = Server.DuongdanSachNovel+String.valueOf(Page);
-        String duongdan = "http://192.168.1.14:8080/server/getAllSachTheoTheLoai.php?page="+Page;
+        RequestQueue requestQueue = Volley.newRequestQueue(NovelActivity.this);
+        String duongdan = Server.DuongdanSachNovel+String.valueOf(Page);
+        //String duongdan = "http://192.168.1.5:8080/server/getAllSachTheoTheLoai.php?page="+Page;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, duongdan, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -144,7 +146,7 @@ public class NovelActivity extends AppCompatActivity {
                 int giaNovel = 0;
                 int idTG = 0;
                 int idtheloai = 0;
-                if(response != null && response.length() >= 2)
+                if(response != null && response.length() != 2)
                 {
                     lvNovel.removeFooterView(footerView);
                     try {
@@ -171,7 +173,7 @@ public class NovelActivity extends AppCompatActivity {
                 {
                     limitData = true;
                     lvNovel.removeFooterView(footerView);
-                    CheckConnection.ShowToast_Short(getApplicationContext(), "Bạn đã đi đến cuối trang");
+                    CheckConnection.ShowToast_Short(NovelActivity.this, "Bạn đã đi đến cuối trang");
                     finish();
                 }
             }
@@ -215,11 +217,11 @@ public class NovelActivity extends AppCompatActivity {
         toolbarNovel = (Toolbar) findViewById(R.id.toolbarSachNovel);
         lvNovel = (ListView) findViewById(R.id.lvSachNovel);
         mangSachNovel = new ArrayList<>();
-        novelAdapter = new NovelAdapter( getApplicationContext(), mangSachNovel);
+        novelAdapter = new NovelAdapter( NovelActivity.this, mangSachNovel);
         lvNovel.setAdapter(novelAdapter);
         LayoutInflater inflater =(LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         footerView = inflater.inflate(R.layout.progressbar, null);
-        mHandler = new mHandler();
+        mHandler = new NovelActivity.mHandler();
     }
 
     public class mHandler extends Handler

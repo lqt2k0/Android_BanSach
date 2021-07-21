@@ -42,16 +42,18 @@
         app:srcCompat="@drawable/pic1"></ImageView>
 
     <TextView
-        android:transitionName="titleWin"
         android:id="@+id/tvTenSachDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:maxLength="30"
         android:text="TextView"
         android:textColor="@color/black"
         android:textStyle="bold"
+        android:transitionName="titleWin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imgSachDetail"
         app:layout_constraintTop_toTopOf="@+id/imgSachDetail" />
 
@@ -72,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="40dp"
         android:transitionName="rateWin"
         app:layout_constraintStart_toEndOf="@+id/imgSachDetail"
         app:layout_constraintTop_toBottomOf="@+id/tvGiaBanDetail" />

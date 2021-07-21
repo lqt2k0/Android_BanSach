@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="activity.LifeSkillsActivity"
+    tools:context="activity.StoryActivity"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarLifeSkills"
+        android:id="@+id/toolbarSachStory"
         android:background="@color/red"
-        app:title="Life Skills"
+        app:title="Story"
         app:titleTextColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent">
     </androidx.appcompat.widget.Toolbar>
     <ListView
-        android:id="@+id/lvSachLifeSkills"
+        android:id="@+id/lvSachStory"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </ListView>

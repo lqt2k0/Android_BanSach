@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -17,21 +19,30 @@ import com.example.baitapandroid.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import activity.BookDetailsActivity;
 import model.Sach;
 import ulti.CheckConnection;
 
-public class SachAdapter extends RecyclerView.Adapter<SachAdapter.ItemHolder> {
+public class SachAdapter extends RecyclerView.Adapter<SachAdapter.ItemHolder> implements Filterable {
     Context context;
 
+    ArrayList<Sach> arraySach;
+    ArrayList<Sach> listSort;
 
+    public Filter getFilter() {
+        return null;
+    }
+
+    Filter filter;
     public SachAdapter(Context context, ArrayList<Sach> arraySach) {
         this.context = context;
         this.arraySach = arraySach;
+        this.listSort  = arraySach;
     }
 
-    ArrayList<Sach> arraySach;
+
     @NonNull
     @Override
     public ItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -56,6 +67,8 @@ public class SachAdapter extends RecyclerView.Adapter<SachAdapter.ItemHolder> {
     public int getItemCount() {
         return arraySach.size();
     }
+
+
 
     public class ItemHolder extends  RecyclerView.ViewHolder
     {
@@ -90,6 +103,51 @@ public class SachAdapter extends RecyclerView.Adapter<SachAdapter.ItemHolder> {
 //            textGia = (TextView) itemView.findViewById(R.id.tvGiaBanDetail);
 //            ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBarDetail);
 //
+        }
+    }
+
+    //Tìm kiếm sản phẩm
+    public void resetData() {
+        arraySach = listSort;
+    }
+
+    public Filter getFilterx() {
+        if (filter == null)
+            filter = new CustomFilter();
+        return filter;
+    }
+
+    private class CustomFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Sach> filList = new ArrayList<>();
+            FilterResults results = new FilterResults();
+            // We implement here the filter logic
+            if (constraint == null || constraint.length() == 0) {
+                filList.addAll(listSort);
+                results.count = listSort.size();
+            } else {
+                ArrayList<Sach> findItem = new ArrayList<>();
+                //Set up tìm kiếm theo sản phẩm
+                for (Sach p : arraySach) {
+                    if (p.getTenSach().toUpperCase().contains(constraint.toString().toUpperCase()))
+                        findItem.add(p);
+                }
+                results.values = findItem;
+                results.count = findItem.size();
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            if (results.count == 0){
+//                notifyDataSetInvalidated();
+            }
+            else {
+                arraySach = (ArrayList<Sach>) results.values;
+                notifyDataSetChanged();
+            }
         }
     }
 }

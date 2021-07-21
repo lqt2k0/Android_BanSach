@@ -61,6 +61,11 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.android.gms:play-services-maps:15.0.1'
     compile 'com.android.support:design:28.0.0'
+    compile 'com.android.support:support-core-utils:28.0.0'
+    implementation 'com.android.support:design:28.0.0-alpha3'
+
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    implementation 'me.gujun.android.taggroup:library:1.4@aar'
 }
 repositories {
     mavenCentral()

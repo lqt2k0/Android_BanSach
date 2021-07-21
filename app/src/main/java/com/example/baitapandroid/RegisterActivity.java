@@ -60,10 +60,10 @@ public class RegisterActivity extends AppCompatActivity {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String txtEmail = edtEmail.getText().toString();
-                String txtUsername = edtUsername.getText().toString();
-                String txtPassword = edtPassword.getText().toString();
-                String txtMobile = edtMobile.getText().toString();
+                String txtEmail = edtEmail.getText().toString().trim();
+                String txtUsername = edtUsername.getText().toString().trim();
+                String txtPassword = edtPassword.getText().toString().trim();
+                String txtMobile = edtMobile.getText().toString().trim();
                 if(!isValid(edtEmail.getText().toString()))
                 {
                     edtEmail.setError("Invalid Email Address");
