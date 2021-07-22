@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.baitapandroid.R;
@@ -19,6 +20,8 @@ import activity.CartActivity;
 import activity.MainActivity;
 import model.GioHang;
 
+import static activity.CartActivity.EventUltil;
+
 public class CartAdapter extends BaseAdapter {
     public CartAdapter(Context context, ArrayList<GioHang> arrayGioHang) {
         this.context = context;
@@ -27,6 +30,7 @@ public class CartAdapter extends BaseAdapter {
 
     Context context;
     ArrayList<GioHang> arrayGioHang;
+
 
     @Override
     public int getCount() {
@@ -48,6 +52,7 @@ public class CartAdapter extends BaseAdapter {
         public TextView txtTenGioHang, txtGiaGioHang;
         ImageView imgGioHang;
         Button btnminus, btnvalues, btnplus;
+
     }
 
     @Override
@@ -91,6 +96,7 @@ public class CartAdapter extends BaseAdapter {
             viewHolder.btnplus.setVisibility(View.VISIBLE);
             viewHolder.btnminus.setVisibility(View.VISIBLE);
         }
+
         ViewHolder holder = viewHolder;
         viewHolder.btnplus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +109,7 @@ public class CartAdapter extends BaseAdapter {
                 MainActivity.mangGioHang.get(position).setGiaSach(giamn);
                 DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
                 holder.txtGiaGioHang.setText("Price : " + decimalFormat.format(giamn) + " VNĐ");
-                CartActivity.EventUltil();
+                EventUltil();
                 if(slmnt > 9)
                 {
                     holder.btnplus.setVisibility(View.INVISIBLE);
@@ -119,8 +125,6 @@ public class CartAdapter extends BaseAdapter {
             }
         });
 
-
-
         viewHolder.btnminus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +136,7 @@ public class CartAdapter extends BaseAdapter {
                 MainActivity.mangGioHang.get(position).setGiaSach(giamn);
                 DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
                 holder.txtGiaGioHang.setText("Price : " + decimalFormat.format(giamn) + " VNĐ");
-                CartActivity.EventUltil();
+                EventUltil();
                 if(slmnt < 2)
                 {
                     holder.btnplus.setVisibility(View.VISIBLE);
@@ -147,6 +151,37 @@ public class CartAdapter extends BaseAdapter {
                 }
             }
         });
+        View finalConvertView = convertView;
+
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(MainActivity.mangGioHang.size() <= 0)
+                {
+                    ((CartActivity) finalConvertView.getContext()).txtThongBao.setVisibility(View.VISIBLE);
+                    Toast.makeText(context, "This book has been deleted!",  Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    MainActivity.mangGioHang.remove(position);
+                    ((CartActivity) finalConvertView.getContext()).cartAdapter.notifyDataSetChanged();
+                    EventUltil();
+                    if(MainActivity.mangGioHang.size() <= 0)
+                    {
+                        ((CartActivity) finalConvertView.getContext()).txtThongBao.setVisibility(View.VISIBLE);
+                        Toast.makeText(context, "This book has been deleted!",  Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        ((CartActivity) finalConvertView.getContext()).txtThongBao.setVisibility(View.INVISIBLE);
+                        ((CartActivity) finalConvertView.getContext()).cartAdapter.notifyDataSetChanged();
+                        EventUltil();
+                    }
+                }
+                return true;
+            }
+        });
+
         return convertView;
     }
 }

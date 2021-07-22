@@ -4,7 +4,7 @@ public class Server {
     public static String localhost = "192.168.1.5:8080";
     public static String DuongdanTheLoaiSP = "http://" + localhost + "/server/getTheLoai.php";
     public static String DuongdanSachNew = "http://" + localhost + "/server/getSach.php";
-    //public static String DuongdanLogin = "http://" + localhost + "/server/login_test.php";
+    public static String DuongdanLogin2 = "http://" + localhost + "/server/login_test.php";
     public static String DuongdanLogin = "http://" + localhost + "/server/login.php";
     public static String DuongdanRegis = "http://" + localhost + "/server/register.php";
     public static String DuongdanSachNovel = "http://" + localhost + "/server/getAllSachTheoTheLoai.php?page=";

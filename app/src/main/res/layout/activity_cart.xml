@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="11"
-    android:descendantFocusability="blocksDescendants"
     tools:context="activity.CartActivity">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarCart"
@@ -14,19 +13,18 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/red"
         app:title="Cart "
-        android:descendantFocusability="blocksDescendants"
         app:titleTextColor="@color/white">
     </androidx.appcompat.widget.Toolbar>
     <LinearLayout
         android:layout_weight="8"
-        android:descendantFocusability="blocksDescendants"
         android:layout_width="match_parent"
         android:layout_height="0dp">
         <FrameLayout
-            android:descendantFocusability="blocksDescendants"
+            android:focusable="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
+                android:focusable="false"
                 android:id="@+id/tvThongBao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -34,13 +32,14 @@
                 android:background="@drawable/emptycart"
                 android:gravity="center|top"
                 android:text="Empty Cart"
-                android:descendantFocusability="blocksDescendants"
                 android:textColor="@color/black"
                 android:textSize="30sp"/>
             <ListView
                 android:id="@+id/lvGioHang"
                 android:longClickable="true"
                 android:clickable="true"
+                android:focusable="true"
+                android:descendantFocusability="blocksDescendants"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 ></ListView>
