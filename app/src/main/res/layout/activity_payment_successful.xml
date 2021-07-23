@@ -92,7 +92,7 @@
             android:layout_marginBottom="50dp"
             android:background="@drawable/giaodien2"
             android:drawableLeft="@drawable/ic_phone"
-            android:text="CONTACTS US"></Button>
+            android:text="CONTACT US"></Button>
     </RelativeLayout>
 
 </RelativeLayout>

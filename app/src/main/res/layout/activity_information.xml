@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/red"
-        app:title="Info"
+        app:title="Information"
         app:titleTextColor="@color/white">
 <!--        <Button-->
 <!--            android:id="@+id/btnShare"-->

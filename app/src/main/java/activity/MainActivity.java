@@ -119,7 +119,16 @@ public class MainActivity extends AppCompatActivity{
                         break;
                     case R.id.menu_notifications:
                         getSupportActionBar().setTitle("Notification");
-
+                        if(CheckConnection.haveNetworkConnection(getApplicationContext()))
+                        {
+                            Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            CheckConnection.ShowToast_Short(getApplicationContext(), "Check your connection" );
+                        }
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.menu_supervisor_account:
                         getSupportActionBar().setTitle("Profile");

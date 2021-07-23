@@ -4,6 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="activity.ContactActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarContacts"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/red"
+        app:title="Contact"
+        app:titleTextColor="@color/white">
+    </androidx.appcompat.widget.Toolbar>
+    <LinearLayout
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <VideoView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:id="@+id/videoContacts">
+        </VideoView>
+        <Button
+            android:layout_marginTop="100dp"
+            android:id="@+id/btnContact"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/giaodien2"
+            android:drawableLeft="@drawable/ic_phone"
+            android:text="CONTACT US"></Button>
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/btnEmail"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/giaodien2"
+            android:drawableLeft="@drawable/ic_white_email"
+            android:text="EMAIL"></Button>
+    </LinearLayout>
 
 </LinearLayout>

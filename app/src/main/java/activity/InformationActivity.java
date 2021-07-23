@@ -55,7 +55,7 @@ public class InformationActivity extends AppCompatActivity implements OnMapReady
         {
             ApplicationInfo api = getApplicationContext().getApplicationInfo();
             String apkPath = api.sourceDir;
-            Intent intent = new Intent(Intent.ACTION_SEND);
+            Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE);
             //intent.setType("application/vnd.android.package-archive");
             intent.putExtra(Intent.EXTRA_SUBJECT, "Hi Im Win");
             //intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(apkPath)));
